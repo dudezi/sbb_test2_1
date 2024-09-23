@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
+
 //    @Query("select "
 //            + "distinct A "
 //            + "from Article A "

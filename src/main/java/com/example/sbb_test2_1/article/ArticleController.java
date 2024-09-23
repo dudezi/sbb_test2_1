@@ -3,10 +3,7 @@ package com.example.sbb_test2_1.article;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +29,12 @@ public class ArticleController {
     public String articleCreate(@RequestParam(value = "title") String title, @RequestParam(value = "content") String content) {
         this.articleService.create(title, content);
         return "redirect:/article/list";
+    }
+
+    @GetMapping(value = "/detail/{id}")
+    public String articleDetail(Model model, @PathVariable("id") Integer id) {
+        Article article = this.articleService.getArticle(id);
+        model.addAttribute("article", article);
+        return "article_detail";
     }
 }
