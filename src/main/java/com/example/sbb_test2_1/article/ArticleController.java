@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -13,11 +14,11 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class ArticleController {
-    private final ArticleRepository articleRepository;
+    private final ArticleService articleService;
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<Article> articleList = this.articleRepository.findAll();
+        List<Article> articleList = this.articleService.getList();
         model.addAttribute("articleList", articleList);
         return "article_list";
     }
@@ -25,5 +26,11 @@ public class ArticleController {
     @GetMapping("/create")
     public String create() {
         return "article_form";
+    }
+
+    @PostMapping("/create")
+    public String articleCreate(@RequestParam(value = "title") String title, @RequestParam(value = "content") String content) {
+        this.articleService.create(title, content);
+        return "redirect:/article/list";
     }
 }
