@@ -2,6 +2,7 @@ package com.example.sbb_test2_1.article;
 
 import com.example.sbb_test2_1.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,5 +33,12 @@ public class ArticleService {
         } else {
             throw new DataNotFoundException("article not found");
         }
+    }
+
+    public void modify(Article article, String title, String content) {
+        article.setTitle(title);
+        article.setContent(content);
+        article.setModifyDate(LocalDateTime.now());
+        this.articleRepository.save(article);
     }
 }

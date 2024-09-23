@@ -12,5 +12,8 @@
             </div>
         </div>
     </div>
-    <a th:href="@{/article/list}">Article 목록</a>
+    <div class="my-3">
+        <a th:href="@{/article/list}">Article 목록</a>
+        <a th:href="@{|/article/modify/${article.id}|}">수정</a>
+    </div>
 </div>

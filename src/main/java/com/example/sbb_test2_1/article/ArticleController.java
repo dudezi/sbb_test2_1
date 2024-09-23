@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RequestMapping("/article")
@@ -20,6 +21,13 @@ public class ArticleController {
         List<Article> articleList = this.articleService.getList();
         model.addAttribute("articleList", articleList);
         return "article_list";
+    }
+
+    @GetMapping(value = "/detail/{id}")
+    public String articleDetail(Model model, @PathVariable("id") Integer id) {
+        Article article = this.articleService.getArticle(id);
+        model.addAttribute("article", article);
+        return "article_detail";
     }
 
     @GetMapping("/create")
@@ -36,14 +44,21 @@ public class ArticleController {
         return "redirect:/article/list";
     }
 
-    @GetMapping(value = "/detail/{id}")
-    public String articleDetail(Model model, @PathVariable("id") Integer id) {
+    @GetMapping("/modify/{id}")
+    public String articleModify(ArticleForm articleForm, @PathVariable("id") Integer id) {
         Article article = this.articleService.getArticle(id);
-        model.addAttribute("article", article);
-        return "article_detail";
+        articleForm.setTitle(article.getTitle());
+        articleForm.setContent(article.getContent());
+        return "article_form";
     }
 
-//    public String articleModify() {
-//        return "redirect:/article/detail/{id}";
-//    }
+    @PostMapping("/modify/{id}")
+    public String articleModify(@Valid ArticleForm articleForm, @PathVariable("id") Integer id, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "article_form";
+        }
+        Article article = this.articleService.getArticle(id);
+        this.articleService.modify(article, articleForm.getTitle(), articleForm.getContent());
+        return "redirect:/article/detail/{id}";
+    }
 }
