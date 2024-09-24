@@ -16,6 +16,11 @@ import java.util.List;
 public class ArticleController {
     private final ArticleService articleService;
 
+    @GetMapping("/")
+    public String main() {
+        return "redirect:/article/list";
+    }
+
     @GetMapping("/list")
     public String list(Model model) {
         List<Article> articleList = this.articleService.getList();
