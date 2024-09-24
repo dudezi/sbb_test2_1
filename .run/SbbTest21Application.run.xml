@@ -4,7 +4,7 @@
     <module name="sbb_test2_1.main" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.example.sbb_test2_1.*" />
+        <option name="PATTERN" value="com.example.sbb_test2_1.user.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
